@@ -5,7 +5,6 @@ tags:
   - Obsidian
   - Quartz
 ---
-
 本文主要介绍如何结合 Obsidian 的本地笔记管理功能和 Quartz 的静态网站生成能力，将你的个人知识库免费发布并托管在 GitHub Pages 上。
 
 ## 为什么选择这种方式？
@@ -57,6 +56,7 @@ Quartz 通过读取其目录下的 `content` 文件夹来生成静态网页。
    npx quartz build --serve
    ```
 2. 命令执行后，在浏览器中访问 `http://localhost:8080` 即可查看你的个人博客。你在 Obsidian 中所做的修改通常也会在浏览器中实时刷新。
+	![[Pasted image 20260411165907.png|620]]
 
 ## 步骤四：配置并部署到 GitHub Pages
 
@@ -72,10 +72,10 @@ Quartz 通过读取其目录下的 `content` 文件夹来生成静态网页。
    ```
    这个命令会自动将你的本地笔记 commit 并 push 到 GitHub。
 4. **在 GitHub 上设置 Pages**：
-   * 打开你的 GitHub 仓库页面。
-   * 进入 **Settings** -> **Pages**。
-   * 在 **Build and deployment** 下的 **Source** 下拉菜单中，选择 **GitHub Actions**。
-   * Quartz 的代码中已经包含了一个自动部署的 Action 工作流配置。只要配置好，以后每次你运行 `npx quartz sync` 提交更改时，GitHub Pages 就会自动构建并更新你的博客。
+- 打开你的 GitHub 仓库页面。
+- 进入 **Settings** -> **Pages**。
+- 在 **Build and deployment** 下的 **Source** 下拉菜单中，选择 **GitHub Actions**。
+- Quartz 的代码中已经包含了一个自动部署的 Action 工作流配置。只要配置好，以后每次你运行 `npx quartz sync` 提交更改时，GitHub Pages 就会自动构建并更新你的博客。
 
 ---
 
