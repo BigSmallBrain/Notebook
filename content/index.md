@@ -1,9 +1,8 @@
 ---
-title: Welcome to My Notebook
+title: About Me
+draft: false
+tags:
+  -
 ---
 
-[[Hello]]
-
-
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+[[hello 👋/2026-04-11]]
