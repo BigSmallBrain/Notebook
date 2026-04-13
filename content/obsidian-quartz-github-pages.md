@@ -7,11 +7,12 @@ tags:
 ---
 本文主要介绍如何结合 Obsidian 的本地笔记管理功能和 Quartz 的静态网站生成能力，将你的个人知识库免费发布并托管在 GitHub Pages 上。
 
+![[Pasted image 20260413220449.png]]
 ## 为什么选择这种方式？
 
 * **完全免费**：利用 GitHub Pages 进行托管，无需支付服务器或托管平台费用。
 * **掌控数据**：所有的 Markdown 文件都在你的本地 Obsidian 库中，数据完全属于你。
-* **高度定制**：Quartz 是一个功能强大的静态网站生成器（Static Site Generator），支持深色模式、图谱视图、双向链接等 Obsidian 核心特性。
+* **高度定制**：[Quartz](http://quartz.jzhao.xyz/) 是一个功能强大的静态网站生成器（Static Site Generator），支持深色模式、图谱视图、双向链接等 Obsidian 核心特性。
 
 ---
 
