@@ -117,7 +117,7 @@ if __name__ == "__main__":
 Flask
 ```
 
-现在我们需要将该应用打包成一个 Docker 镜像，以便在 Kubernetes 集群上作为容器运行。在相同目录下创建一个名为 `Dockerfile` 的文件，内容如下：
+现在需要将该应用打包成一个 Docker 镜像，以便在 Kubernetes 集群上作为容器运行。在相同目录下创建一个名为 `Dockerfile` 的文件，内容如下：
 
 ```dockerfile
 FROM python:3.9-slim-buster
@@ -315,7 +315,7 @@ resource "kubernetes_deployment" "v2" {
 * 它使用我们新构建的 `kingslayer-app:v2` 镜像。
 * 为新部署配置了与当前生产环境完全一致的副本数（2个）。这是一个非常关键的细节，因为在测试完成后一次性将流量切换过来，因此绿色环境必须具备承载全部生产流量的能力。
 
-此时最为重要的一点是：**我们尚未修改最初创建的 Kubernetes 服务，它依然指向 v1 版本。**
+此时最为重要的一点是：**没有修改最初创建的 Kubernetes 服务，它依然指向 v1 版本。**
 
 运行 `terraform plan` 和 `terraform apply` 部署新资源。部署完成后可以看到两个版本的应用正在并存运行：
 
