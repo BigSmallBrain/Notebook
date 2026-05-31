@@ -86,4 +86,4 @@ Quartz 通过读取其目录下的 `content` 文件夹来生成静态网页。
 1. 在 Obsidian 中尽情写作（文件存放在 `content` 目录下）。
 2. 在终端运行 `npx quartz sync` 进行发布。
 
-> 参考来源: [How to publish Obsidian notes with Quartz on GitHub Pages - Nicole van der Hoeven](https://notes.nicolevanderhoeven.com/How+to+publish+Obsidian+notes+with+Quartz+on+GitHub+Pages)
+> 参考来源： [How to publish Obsidian notes with Quartz on GitHub Pages - Nicole van der Hoeven](https://notes.nicolevanderhoeven.com/How+to+publish+Obsidian+notes+with+Quartz+on+GitHub+Pages)
