@@ -152,7 +152,7 @@ resource "kubernetes_namespace" "kingslayer" {
 
 在此命名空间中，首先创建一个 Kubernetes 服务（Service），它将作为该应用的统一访问入口：
 
-```HCL
+```hcl
 resource "kubernetes_service" "default" {
   metadata {
     name      = "kingslayer-app"
