@@ -8,7 +8,7 @@ tags:
   - 蓝绿部署
 ---
 
-在部署应用的新版本时，应该使用一种能够将对用户的潜在影响降至最低的策略。**蓝绿部署（Blue/Green Deployments）就是这样一个优秀的候选方案。你可以仅使用服务（Services）和部署（Deployments）等原生 Kubernetes 对象在 Kubernetes 中实现蓝绿部署，并使用 Terraform 来编排所有必需的步骤。
+在部署应用的新版本时，应该使用一种能够将对用户的潜在影响降至最低的策略。\*\*蓝绿部署（Blue/Green Deployments）就是这样一个优秀的候选方案。你可以仅使用服务（Services）和部署（Deployments）等原生 Kubernetes 对象在 Kubernetes 中实现蓝绿部署，并使用 Terraform 来编排所有必需的步骤。
 
 在这篇博客中，将介绍如何使用 Terraform 在 Kubernetes 中实现蓝绿部署。
 
@@ -20,7 +20,8 @@ tags:
 
 ![[Pasted image 20260531211406.png]]
 
-在 Kubernetes 上管理工作负载具有**声明式（Declarative）的特征。你只需告诉 Kubernetes 集群你期望的状态是什么，集群就会自动负责将实际状态调整为你的期望状态。这与 Terraform 的工作方式非常相似，因此这两项技术可以完美地协同工作。
+在 Kubernetes 上管理工作负载具有\*\*声明式（Declarative）的特征。你只需告诉 Kubernetes 集群你期望的状态是什么，集群就会自动负责将实际状态调整为你的期望状态。这与 Terraform 的工作方式非常相似，因此这两项技术可以完美地协同工作。
+
 ### 如何使用 Terraform 管理 Kubernetes？
 
 Kubernetes 暴露了一个功能强大的 API，允许你管理 Kubernetes 环境的方方面面。只要存在 API，通常就意味着会有相应的 Terraform 提供商（Provider）来对接该 API。对于 Kubernetes，Terraform 提供了 [Kubernetes Provider](https://registry.terraform.io/providers/hashicorp/kubernetes/2.37.1) 。
@@ -108,6 +109,7 @@ if __name__ == "__main__":
 ```
 
 关于此应用，有两个关键细节需要注意：
+
 1. 访问地址 `"/"` 将返回静态消息 `"Kingslayer App V2 🚀"`。
 2. 该应用在容器内部监听 `5000` 端口。
 
@@ -214,9 +216,10 @@ resource "kubernetes_deployment" "v1" {
 ```
 
 关于该部署，请注意以下细节：
-* 应用被配置为运行 2 个实例（`replicas = 2`）。
-* 拥有必需的标签 `app = "kingslayer-app-v1"`。
-* 使用此前构建的 `kingslayer-app:v1` 镜像。
+
+- 应用被配置为运行 2 个实例（`replicas = 2`）。
+- 拥有必需的标签 `app = "kingslayer-app-v1"`。
+- 使用此前构建的 `kingslayer-app:v1` 镜像。
 
 将镜像拉取策略 `image_pull_policy` 设置为了 `IfNotPresent`，直接使用本地电脑上构建的镜像。在实际生产场景中，应该使用适合环境的拉取策略。
 
@@ -310,10 +313,11 @@ resource "kubernetes_deployment" "v2" {
 ```
 
 请注意关于新部署资源的以下细节：
-* 这是一个**全新的资源**，完全没有改动已有的 `v1` 部署。在最初阶段，两个部署将并存。
-* 该部署使用的标签是 `app = "kingslayer-app-v2"`。
-* 它使用我们新构建的 `kingslayer-app:v2` 镜像。
-* 为新部署配置了与当前生产环境完全一致的副本数（2个）。这是一个非常关键的细节，因为在测试完成后一次性将流量切换过来，因此绿色环境必须具备承载全部生产流量的能力。
+
+- 这是一个**全新的资源**，完全没有改动已有的 `v1` 部署。在最初阶段，两个部署将并存。
+- 该部署使用的标签是 `app = "kingslayer-app-v2"`。
+- 它使用我们新构建的 `kingslayer-app:v2` 镜像。
+- 为新部署配置了与当前生产环境完全一致的副本数（2个）。这是一个非常关键的细节，因为在测试完成后一次性将流量切换过来，因此绿色环境必须具备承载全部生产流量的能力。
 
 此时最为重要的一点是：**没有修改最初创建的 Kubernetes 服务，它依然指向 v1 版本。**
 
@@ -436,10 +440,11 @@ kingslayer-app-v2-6dbbd77476-qx8nv   1/1     Running   0          9m17s   app=ki
 应该在部署前后密切监控应用的关键绩效指标（KPIs）。如果任何 KPI 指标出现负面下滑，都应果断触发回滚。
 
 典型的监控指标包括：
-* HTTP 状态码（如 5xx 错误率）
-* 接口响应延迟
-* CPU 和内存的利用率
-* 业务转化率等
+
+- HTTP 状态码（如 5xx 错误率）
+- 接口响应延迟
+- CPU 和内存的利用率
+- 业务转化率等
 
 ### 5. 极其谨慎地处理状态应用（Stateful Applications） 💾
 
@@ -448,6 +453,7 @@ kingslayer-app-v2-6dbbd77476-qx8nv   1/1     Running   0          9m17s   app=ki
 如果新版本应用包含数据库表结构的变更（Schema Changes），必须采用多阶段过渡的策略。
 
 例如，如果你的应用使用 PostgreSQL 数据库，并需要修改某张数据库表。应当遵循以下部署步骤：
+
 1. 部署绿色版本的应用，但不要立即切换流量。
 2. 对数据库进行**向前和向后兼容**的更新。这意味着在切换流量前，旧的蓝色版本依然能够无缝读写更新后的数据库表。
 3. 将流量切换到绿色版本。
@@ -457,14 +463,15 @@ kingslayer-app-v2-6dbbd77476-qx8nv   1/1     Running   0          9m17s   app=ki
 对于某些非常重大的变更，甚至可能需要将上述过程拆分为多个微小的迭代步骤来分批实施。
 
 ---
+
 ## 关键要点总结 📝
 
 - **蓝绿部署**是向生产环境安全引入新版本应用的卓越策略，能提供充分的测试空间和秒级回滚保障。
 - **使用 Terraform 在 Kubernetes 中实现蓝绿部署的四个核心阶段：**
-    1. 部署初始（蓝色）应用版本，配置对应的命名空间、服务和部署。这需要第一次 `terraform apply`。
-    2. 部署新（绿色）应用版本，在同一命名空间中作为完全独立的部署运行。这需要第二次 `terraform apply`。
-    3. 完成新版本验证后，更新 Kubernetes 服务，使其 Selector 指向新的部署。这需要第三次 `terraform apply`。
-    4. 确认新版本稳定运行后，下线并清理旧的（蓝色）部署资源。这需要第四次也是最后一次 `terraform apply`。
+  1. 部署初始（蓝色）应用版本，配置对应的命名空间、服务和部署。这需要第一次 `terraform apply`。
+  2. 部署新（绿色）应用版本，在同一命名空间中作为完全独立的部署运行。这需要第二次 `terraform apply`。
+  3. 完成新版本验证后，更新 Kubernetes 服务，使其 Selector 指向新的部署。这需要第三次 `terraform apply`。
+  4. 确认新版本稳定运行后，下线并清理旧的（蓝色）部署资源。这需要第四次也是最后一次 `terraform apply`。
 - 蓝绿部署的成功高度依赖于**流程自动化**、**持续测试**、**明确的成功指标量化**以及**状态应用数据的兼容性处理**。
 
 > 参考来源：[Blue/Green Deployments With Terraform & Kubernetes](https://spacelift.io/blog/terraform-blue-green-deployment)
